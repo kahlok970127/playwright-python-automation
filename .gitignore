@@ -16,3 +16,6 @@ env/
 
 # VS Code
 .vscode/
+
+# Screenshots
+screenshots/

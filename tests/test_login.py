@@ -63,3 +63,8 @@ def test_username_spaces(page):
     auth.login(" standard_user ", "secret_sauce")
     auth.verify_login_failed()
 
+
+def test_login_fail_capture(page):
+    auth = Auth_action(page)
+    auth.login(" standard_user ", "secret_sauce")
+    auth.verify_login_success()
