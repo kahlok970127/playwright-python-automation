@@ -1,6 +1,6 @@
 import pytest
-from login import Auth_action
-from inventory import inventory_action
+from page.login import Auth_action
+from page.inventory import inventory_action
 
 
 @pytest.fixture
