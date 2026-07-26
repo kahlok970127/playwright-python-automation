@@ -19,3 +19,7 @@ env/
 
 # Screenshots
 screenshots/
+
+
+# Test Report
+report.html
