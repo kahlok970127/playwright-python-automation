@@ -7,7 +7,7 @@ class Auth_action():
         self.username = page.locator("[data-test=\"username\"]")
         self.password = page.locator("[data-test=\"password\"]")
         self.loginbutton = page.locator("[data-test=\"login-button\"]")
-        self.error = page.locator("[data-test='error']")
+        self.error = page.locator("[data-test=\"error\"]")
         
 
 
@@ -20,6 +20,14 @@ class Auth_action():
             self.password.fill(password)
             self.loginbutton.click()
 
+    def login_with_enter(self,username,password):
+            self.page.goto("https://www.saucedemo.com/")
+            self.username.wait_for(state="visible",timeout=2000)
+            self.username.click()
+            self.username.fill(username)
+            self.password.click()
+            self.password.fill(password)
+            self.password.press("Enter")
 
     def verify_login_success(self):
         expect(self.page).to_have_url(
