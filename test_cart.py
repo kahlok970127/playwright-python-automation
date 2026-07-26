@@ -1,6 +1,6 @@
-from auth import Auth_action
+from login import Auth_action
 from inventory import inventory_action
-from shopingcart import Cart_action
+from shopping_cart import Cart_action
 
 
 def test_product_show_in_cart(page):

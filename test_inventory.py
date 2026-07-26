@@ -1,4 +1,4 @@
-from auth import Auth_action
+from login import Auth_action
 from inventory import inventory_action
 
 

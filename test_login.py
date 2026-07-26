@@ -1,4 +1,4 @@
-from auth import Auth_action
+from login import Auth_action
 
 def test_login_success(page):
     auth = Auth_action(page)
