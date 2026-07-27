@@ -11,15 +11,23 @@ class Cart_action:
         self.inventory_item_name = page.locator(".inventory_item_name")
         self.inventory_item_price = page.locator(".inventory_item_price")
         self.checkout_button = page.locator("#checkout")
+        self.continue_shopping_button = page.locator("#continue-shopping")
+
 
     def open_cart(self):
         self.cart_button.click()
 
     def remove_certain_product(self,product_name):
-        item = self.inventory_item.filter(has=self.inventory_item_name.filter(has_text=product_name))
+        item = self.cart_items.filter(has=self.inventory_item_name.filter(has_text=product_name))
         item.locator("button").click()
 
     def checkout_cart(self):
         self.checkout_button.click()
+
+    def continue_shopping(self):
+        self.continue_shopping_button.click()
+
+
+
 
     
