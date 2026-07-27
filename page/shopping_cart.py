@@ -18,8 +18,14 @@ class Cart_action:
         self.cart_button.click()
 
     def remove_certain_product(self,product_name):
-        item = self.cart_items.filter(has=self.inventory_item_name.filter(has_text=product_name))
-        item.locator("button").click()
+        if isinstance(product_name, str):
+            product_name = [product_name]
+            # item = self.cart_items.filter(has=self.inventory_item_name.filter(has_text=product_name))
+            # item.locator("button").click()
+
+        for name in product_name:
+            item = self.cart_items.filter(has=self.inventory_item_name.filter(has_text=name))
+            item.locator("button").click()
 
     def checkout_cart(self):
         self.checkout_button.click()

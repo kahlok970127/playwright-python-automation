@@ -46,3 +46,20 @@ def test_continue_shopping(cart_page):
 def test_empty_cart(cart_page):
     cart_page.open_cart()
     assert cart_page.cart_items.count() == 0
+
+def test_added_multiple_item_match_in_cart(inventory_page, cart_page):
+    product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
+    inventory_page.add_multiple_items_with_name(product_group)
+    cart_page.open_cart()
+
+    cart_items = cart_page.inventory_item_name.all_inner_texts()
+    # no care the order so can use set
+    assert set(cart_items) == set(product_group)
+
+def test_remove_multiple_item_with_name(inventory_page, cart_page):
+    product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
+    remove_product_group=["Sauce Labs Backpack","Sauce Labs Bolt T-Shirt"]
+    inventory_page.add_multiple_items_with_name(product_group)
+    cart_page.open_cart()
+    cart_page.remove_certain_product(remove_product_group)
+    expect(cart_page.shopping_cart_badge).to_have_count(1)

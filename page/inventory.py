@@ -72,5 +72,11 @@ class inventory_action():
     def get_product_price(self, product_name):
         item = self.inventory_item.filter(has=self.inventory_item_name.filter(has_text=product_name))
         return item.locator(".inventory_item_price").inner_text()
+
+    def add_multiple_items_with_name(self, product_group):
+
+        for product_name in product_group:
+           item = self.inventory_item.filter(has=self.inventory_item_name.filter(has_text=product_name))
+           item.locator("button").click()
     
     

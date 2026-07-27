@@ -70,3 +70,8 @@ def test_sort_name_desc(inventory_page):
 def test_add_certain_item(inventory_page):
     inventory_page.add_certain_item('Sauce Labs Bike Light')
     assert inventory_page.badge.inner_text() == "1"
+
+def test_add_certain_item(inventory_page):
+    product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
+    inventory_page.add_multiple_items_with_name(product_group)
+    assert inventory_page.badge.inner_text() == "3"
