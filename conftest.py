@@ -2,6 +2,8 @@ import pytest
 from page.login import Auth_action
 from page.inventory import inventory_action
 from page.shopping_cart import Cart_action
+from page.checkout import Checkout_action
+
 import time
 
 @pytest.fixture
@@ -10,16 +12,17 @@ def logged_in_page(page):
     auth.login("standard_user", "secret_sauce")
     return page
 
-
 @pytest.fixture
 def inventory_page(logged_in_page):
     return inventory_action(logged_in_page)
-
 
 @pytest.fixture
 def cart_page(logged_in_page):
     return Cart_action(logged_in_page)
 
+@pytest.fixture
+def checkout_page(logged_in_page):
+    return Checkout_action(logged_in_page)
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):
