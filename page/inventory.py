@@ -4,15 +4,15 @@ import time
 class inventory_action():
     def __init__(self,page):
         self.page = page
-        self.products = page.locator(".inventory_item")
+        self.inventory_item = page.locator(".inventory_item")
         self.addtocart = page.locator("[data-test^=\"add-to-cart\"]")
         self.badge = page.locator("[data-test=\"shopping-cart-badge\"]")
         self.removeitem = page.locator("[data-test^=\"remove\"]")
         self.prices = page.locator("[data-test^=\"inventory-item-price\"]")
         self.images = page.locator("img.inventory_item_img")
         self.sortbutton = page.locator("[data-test^=\"product-sort-container\"]")
-        self.itemname = page.locator(".inventory_item_name")
-
+        self.inventory_item_name = page.locator(".inventory_item_name")
+        self.addcertainitem = page.locator("[data-test=\"add-to-cart-sauce-labs-bike-light\"]")
 
     def add_single_product(self):
         self.addtocart.first.click()
@@ -52,11 +52,17 @@ class inventory_action():
     
     def get_names(self):
 
-        itemname = []
-        for i in range(self.itemname.count()):
-            name  = self.itemname.nth(i).inner_text()
-            itemname.append(name)
+        inventory_item_name = []
+        for i in range(self.inventory_item_name.count()):
+            name  = self.inventory_item_name.nth(i).inner_text()
+            inventory_item_name.append(name)
 
-        return itemname
+        return inventory_item_name
 
-    
+    def add_certain_item(self, product_name):
+        item = self.inventory_item.filter(has=self.inventory_item_name.filter(has_text=product_name))
+        item.locator("button").click()
+
+    def get_product_price(self, product_name):
+        item = self.inventory_item.filter(has=self.inventory_item_name.filter(has_text=product_name))
+        return item.locator(".inventory_item_price").inner_text()
