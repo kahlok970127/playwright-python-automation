@@ -47,8 +47,6 @@ def test_lockout_user(page):
     auth.login("locked_out_user","secret_sauce")
     auth.verify_login_failed()
 
-
-
 def test_username_case_sensitive(page):
     auth = Auth_action(page)
     auth.login("Standard_User", "secret_sauce")
