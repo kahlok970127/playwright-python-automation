@@ -6,6 +6,17 @@ from page.shopping_cart import Cart_action
 def test_item_not_empty(inventory_page):
     assert inventory_page.inventory_item.count() > 0
 
+def test_product_price_not_empty(inventory_page):
+    assert inventory_page.prices.count() > 0
+
+def test_every_product_image_loaded(inventory_page):
+    assert inventory_page.inventory_item.count() == inventory_page.images.count()
+
+    for i in range(inventory_page.images.count()):
+        img = inventory_page.images.nth(i)
+        expect(img).to_be_visible()
+        assert img.evaluate("(img) => img.complete && img.naturalWidth > 0")
+
 
 def test_check_add_to_cart_button(inventory_page):
     assert inventory_page.addtocart.count() > 0
@@ -14,8 +25,17 @@ def test_add_product_to_cart(inventory_page):
     inventory_page.add_single_product()
     assert inventory_page.badge.inner_text() == "1"
 
+def test_add_certain_item(inventory_page):
+    inventory_page.add_certain_item('Sauce Labs Bike Light')
+    assert inventory_page.badge.inner_text() == "1"
+
 def test_add_multiple_product_to_cart(inventory_page):
     inventory_page.add_multiple_product(3)
+    assert inventory_page.badge.inner_text() == "3"
+
+def test_add_multiple_item_with_name(inventory_page):
+    product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
+    inventory_page.add_multiple_items_with_name(product_group)
     assert inventory_page.badge.inner_text() == "3"
 
 
@@ -29,19 +49,6 @@ def test_remove_multiple_product_to_cart(inventory_page):
     inventory_page.add_multiple_product(3)
     inventory_page.remove_multiple_product(2)
     assert inventory_page.badge.inner_text() == "1"
-
-
-def test_product_price_not_empty(inventory_page):
-    assert inventory_page.prices.count() > 0
-
-
-def test_every_product_image_loaded(inventory_page):
-    assert inventory_page.inventory_item.count() == inventory_page.images.count()
-
-    for i in range(inventory_page.images.count()):
-        img = inventory_page.images.nth(i)
-        expect(img).to_be_visible()
-        assert img.evaluate("(img) => img.complete && img.naturalWidth > 0")
 
 
 def test_sort_low_to_high(inventory_page):
@@ -67,11 +74,5 @@ def test_sort_name_desc(inventory_page):
     names = inventory_page.get_names()
     assert names == sorted(names, reverse=True)
 
-def test_add_certain_item(inventory_page):
-    inventory_page.add_certain_item('Sauce Labs Bike Light')
-    assert inventory_page.badge.inner_text() == "1"
 
-def test_add_certain_item(inventory_page):
-    product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
-    inventory_page.add_multiple_items_with_name(product_group)
-    assert inventory_page.badge.inner_text() == "3"
+

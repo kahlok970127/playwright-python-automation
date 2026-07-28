@@ -3,7 +3,7 @@ from page.login import Auth_action
 from page.inventory import inventory_action
 from page.shopping_cart import Cart_action
 from page.checkout import Checkout_action
-
+from page.checkout2 import Checkout_action2
 import time
 
 @pytest.fixture
@@ -23,6 +23,10 @@ def cart_page(logged_in_page):
 @pytest.fixture
 def checkout_page(logged_in_page):
     return Checkout_action(logged_in_page)
+
+@pytest.fixture
+def checkout_page2(logged_in_page):
+    return Checkout_action2(logged_in_page)
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):

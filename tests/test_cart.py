@@ -24,28 +24,6 @@ def test_added_item_match_in_cart(inventory_page, cart_page):
     cart_page.open_cart()
     assert cart_page.inventory_item_price.inner_text() == inventory_price
 
-def test_remove_product(inventory_page, cart_page):
-    inventory_page.add_certain_item('Sauce Labs Bike Light')
-    cart_page.open_cart()
-    cart_page.remove_certain_product('Sauce Labs Bike Light')
-    expect(cart_page.shopping_cart_badge).to_have_count(0)
-
-def test_checkout_button(cart_page):
-
-    cart_page.open_cart()
-    cart_page.checkout_cart()
-    expect(cart_page.page).to_have_url("https://www.saucedemo.com/checkout-step-one.html")
-
-
-def test_continue_shopping(cart_page):
-    cart_page.open_cart()
-    cart_page.continue_shopping()
-
-    expect(cart_page.page).to_have_url("https://www.saucedemo.com/inventory.html")
-
-def test_empty_cart(cart_page):
-    cart_page.open_cart()
-    assert cart_page.cart_items.count() == 0
 
 def test_added_multiple_item_match_in_cart(inventory_page, cart_page):
     product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
@@ -56,6 +34,13 @@ def test_added_multiple_item_match_in_cart(inventory_page, cart_page):
     # no care the order so can use set
     assert set(cart_items) == set(product_group)
 
+
+def test_remove_product(inventory_page, cart_page):
+    inventory_page.add_certain_item('Sauce Labs Bike Light')
+    cart_page.open_cart()
+    cart_page.remove_certain_product('Sauce Labs Bike Light')
+    expect(cart_page.shopping_cart_badge).to_have_count(0)
+
 def test_remove_multiple_item_with_name(inventory_page, cart_page):
     product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
     remove_product_group=["Sauce Labs Backpack","Sauce Labs Bolt T-Shirt"]
@@ -63,3 +48,22 @@ def test_remove_multiple_item_with_name(inventory_page, cart_page):
     cart_page.open_cart()
     cart_page.remove_certain_product(remove_product_group)
     expect(cart_page.shopping_cart_badge).to_have_count(1)
+
+def test_empty_cart(cart_page):
+    cart_page.open_cart()
+    assert cart_page.cart_items.count() == 0
+
+def test_checkout_button(cart_page):
+    cart_page.open_cart()
+    cart_page.checkout_cart()
+    expect(cart_page.page).to_have_url("https://www.saucedemo.com/checkout-step-one.html")
+
+
+def test_continue_shopping(cart_page):
+    cart_page.open_cart()
+    cart_page.continue_shopping()
+    expect(cart_page.page).to_have_url("https://www.saucedemo.com/inventory.html")
+
+
+
+
