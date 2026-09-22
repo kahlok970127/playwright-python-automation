@@ -3,6 +3,8 @@ from playwright.sync_api import expect
 def test_product_show_in_cart(inventory_page,cart_page):
     inventory_page.add_multiple_product(2)
     cart_page.open_cart()
+    cart_page.cart_items.first.wait_for(state="visible")
+
     assert cart_page.cart_items.count() == 2
 
 
@@ -14,6 +16,7 @@ def test_cart_innertext_count(inventory_page, cart_page):
 def test_certain_product_name_match_in_cart(inventory_page, cart_page):
     inventory_page.add_certain_item('Sauce Labs Bike Light')
     cart_page.open_cart()
+    cart_page.cart_items.first.wait_for(state="visible")
     assert cart_page.inventory_item_name.inner_text() == 'Sauce Labs Bike Light'
 
 
@@ -22,6 +25,7 @@ def test_added_item_match_in_cart(inventory_page, cart_page):
     inventory_price = inventory_page.get_product_price('Sauce Labs Bike Light')
     inventory_page.add_certain_item('Sauce Labs Bike Light')
     cart_page.open_cart()
+    cart_page.cart_items.first.wait_for(state="visible")
     assert cart_page.inventory_item_price.inner_text() == inventory_price
 
 
@@ -29,6 +33,7 @@ def test_added_multiple_item_match_in_cart(inventory_page, cart_page):
     product_group=["Sauce Labs Backpack","Sauce Labs Bike Light","Sauce Labs Bolt T-Shirt"]
     inventory_page.add_multiple_items_with_name(product_group)
     cart_page.open_cart()
+    cart_page.cart_items.first.wait_for(state="visible")
 
     cart_items = cart_page.inventory_item_name.all_inner_texts()
     # no care the order so can use set
@@ -38,6 +43,8 @@ def test_added_multiple_item_match_in_cart(inventory_page, cart_page):
 def test_remove_product(inventory_page, cart_page):
     inventory_page.add_certain_item('Sauce Labs Bike Light')
     cart_page.open_cart()
+    cart_page.cart_items.first.wait_for(state="visible")
+
     cart_page.remove_certain_product('Sauce Labs Bike Light')
     expect(cart_page.shopping_cart_badge).to_have_count(0)
 
@@ -46,6 +53,7 @@ def test_remove_multiple_item_with_name(inventory_page, cart_page):
     remove_product_group=["Sauce Labs Backpack","Sauce Labs Bolt T-Shirt"]
     inventory_page.add_multiple_items_with_name(product_group)
     cart_page.open_cart()
+    
     cart_page.remove_certain_product(remove_product_group)
     expect(cart_page.shopping_cart_badge).to_have_count(1)
 

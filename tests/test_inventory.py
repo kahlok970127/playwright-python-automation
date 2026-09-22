@@ -4,12 +4,16 @@ from page.inventory import inventory_action
 from page.shopping_cart import Cart_action
 
 def test_item_not_empty(inventory_page):
+    inventory_page.inventory_item.first.wait_for(state="visible")
     assert inventory_page.inventory_item.count() > 0
 
 def test_product_price_not_empty(inventory_page):
+    inventory_page.inventory_item.first.wait_for(state="visible")
     assert inventory_page.prices.count() > 0
 
 def test_every_product_image_loaded(inventory_page):
+    inventory_page.inventory_item.first.wait_for(state="visible")
+
     assert inventory_page.inventory_item.count() == inventory_page.images.count()
 
     for i in range(inventory_page.images.count()):
@@ -19,13 +23,17 @@ def test_every_product_image_loaded(inventory_page):
 
 
 def test_check_add_to_cart_button(inventory_page):
+    inventory_page.inventory_item.first.wait_for(state="visible")
     assert inventory_page.addtocart.count() > 0
 
 def test_add_product_to_cart(inventory_page):
+    inventory_page.inventory_item.first.wait_for(state="visible")
     inventory_page.add_single_product()
     assert inventory_page.badge.inner_text() == "1"
 
 def test_add_certain_item(inventory_page):
+    inventory_page.inventory_item.first.wait_for(state="visible")
+
     inventory_page.add_certain_item('Sauce Labs Bike Light')
     assert inventory_page.badge.inner_text() == "1"
 
